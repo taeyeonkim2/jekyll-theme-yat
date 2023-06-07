@@ -152,11 +152,11 @@ yat:
 #   - about.md
 
 # Page default value
- defaults:
-   home:
-     heading: "매일 기록하는 코딩 공부 "
-     subheading: "힘든 날은 건너뜀"
-     banner: ![내가 그린 배너](./images/Screenshot_20230607_125954_Gallery)
+# defaults:
+#   home:
+#     heading: "매일 기록하는 코딩 공부 "
+#     subheading: "힘든 날은 건너뜀"
+#     banner: ![내가 그린 배너](./images/Screenshot_20230607_125954_Gallery)
 
 # Banner default settings
 # These banner settings are for global banner default, but you can also
