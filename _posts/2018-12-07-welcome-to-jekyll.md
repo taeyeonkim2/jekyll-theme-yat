@@ -20,10 +20,27 @@ tags: jekyll theme yat
 sidebar: []
 ---
 
-You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run `jekyll serve`, which launches a web server and auto-regenerates your site when a file is updated.
+HTML 기초 내용, 작성 규칙
 
-To add new posts, simply add a file in the `_posts` directory that follows the convention `YYYY-MM-DD-name-of-post.ext` and includes the necessary front matter. Take a look at the source for this post to get an idea about how it works.
+HTML 기초 내용 <br/>
+- HTML은 웹개발의 기본 영역이기에 간단하게 배울 수 있다.
+- 쉽고 직관적인 편이라 초보자의 첫 스타트로 배우기 괜찮다.
+<hr>
 
+__1. 기본 준비__
+ - Html을 편하게 작성하기 위해 Visual studio code 설치 
+
+__2. Html 문서의 구조__
+ - head : html의 제목영역, css등을 작성할 수 있는 공간
+ - body : 본문 영역; 화면 부분을 작성하는 공간
+ - 태그 : html에서 사용하는 명령어로, <태그>로 나타냄
+
+__3. Html 작성 규칙__
+- 태그 이름은 되도록 소문자 사용
+- 연속된 공백은 하나의 공백과 같음.(공백100개 작성해도 1개라고 처리)
+- 주석 : `<!-- 주석내용 -->`
+- 태그는 쌍으로 사용(태그 시작과 태그 종료를 명확하게 사용)
+  ex) `<p>`: 문단 열기 `</p>` : 문단 닫기
 ## section 1
 
 Jekyll also offers powerful support for code snippets:
