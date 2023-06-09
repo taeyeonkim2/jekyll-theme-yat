@@ -19,3 +19,9 @@ tags: [test]
 우리는 스프링에서 new로 생성하지 않기로 했어.
 
 그래서 DI기법을 이용하려면 MemberDAO의 객체도 만들어져 있어야 하잖아
+
+```1=java
+<context:component-scan base-package="kr.bit.model" />
+DAO의 객체 생성을 위해 root-context.xml이 읽힐 때, 스캔되려면 
+문장을 추가해줘야돼
+```
