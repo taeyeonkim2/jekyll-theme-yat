@@ -1,7 +1,7 @@
 ---
 layout: post
-title: Oracle05_데이터모델링과 INSERT, UPDATE문
-subtitle: using INSERT, UPDATE Statement
+title: Oracle_04_오라클 SELECT 명령어와 함수2
+subtitle: Oracle SELCET 
 author: Jo
 categories: Oracle
 banner:
@@ -21,89 +21,96 @@ sidebar: []
 
 ---
 
-오늘의 주제 : 데이터베이스 모델링 <br>
+오늘의 주제 : 오라클 select 명령어와 함수(예제 위주) <br>
  * * *
+
+## 오라클 기본 용어
+-- 테이블 : 행(row, record, tuple)과 열(column,attribute,field)
+-- DDL(데이터 정의어) : Data Definition Language : create, drop, alter
+-- DML(데이터 조작어) : Data Manipulation Language : select, insert, delete, update
+
+## CREATE 문
+: 데이터 테이블을 만들 때 사용
+
+- buytbl의 모든 속성을 가져와서 테이블 만들기
+```sql
+CREATE TABLE buytbl2 AS SELECT * FROM buytbl;
+```
+- buytbl의 특정 속성을 가져와서 테이블 만들기
+```sql
+CREATE TABLE buytbl3 AS SELECT idnum, userid, prodname FROM buytbl;
+```
+- buytbl2, buytbl3 삭제
+```sql
+DROP table buytbl2;
+DROP table buytbl3;
+```
+- buytbl2 직접 생성, buytbl과 동일한 구조로 생성
+```sql
+CREATE table buytbl2(
+    idnum number(8) not null,
+    userid char(8) not null,
+    prodname nchar(6) not null,
+    groupname nchar(4),
+    price number(8) not null,
+    amount number(3) not null,
+    primary key(idnum),
+    FOREIGN KEY (userid) references usertble(userid)
+); 
+```
+- not null, primary key : 제약조건 <br>
+- primary key : 중복을 허용하지 않고, null을 허용하지 않는 제약조건 <br>
+   - pk 제약조건 설정 : 자동으로 index 구성, 이름도 자동 부여 <br>
+   - 검색에 가장 많이 활용되는 필드를 설정 <br>
+- foreign key : 외래키는 참조 테이블의 pk만 가능 <br>
+  
+
+
+## 제약조건
+: 데이터의 무결성을 지키기 위한 제한된 조건을 의미 <br>
+- 어떠한 조건을 만족했을 때 입력되도록 제약할 수 있다. <br>
+- 종류 : PRIMARY KEY, FOREIGN KEY, UNIQUE, CHECK, DEFAULT, NULL <br>
+- 제약조건은 예제를 통해 파악하는게 더 쉬워서 예제를 보자.<br>
+
+-- 쿼리8-1)
+```sql
+CREATE TABLE NewBook(
+    bookid NUMBER(2) PRIMARY KEY,
+    bookname NVARCHAR2(20) NOT NULL,
+    publisher NVARCHAR2(20) NOT NULL,
+    price NUMBER(8) DEFAULT 10000 CHECK(price>1000));
+```
+-- DEFAULT : 값이 입력되지 않을 경우에 기본적으로 입력되는 값 설정<br>
+-- CHECK : 데이터를 점검하는 제약 조건<br>
+
+-- 쿼리8-2)
+```sql
+CREATE TABLE NewCustomer(
+    custid NUMBER(5),
+    name NVARCHAR2(40),
+    address NVARCHAR2(40),
+    phone VARCHAR2(30) UNIQUE,
+    CONSTRAINT pk_custid primary key(custid));
+```
+-- CONSTRAINT : 제약 조건 이름을 설정할 수 있는 키워드<br>
+-- 여기서 pk_custid : 제약 조건 이름<br>
+
+-- 쿼리 9) NewBook 테이블 삭제, 삭제 거절 원인을 파악하고 관련된 테이블을 같이 삭제하시오.
+```sql
+DROP TABLE NewBook;
+```
+ -> 에러 발생 : neworders테이블이 newbook의 bookid참조 -> neworders를 먼저 삭제해야함 <br>
+
+-- 쿼리 10-1) 테이블에 isbn속성 추가
+ALTER TABLE NewBook ADD isbn VARCHAR2(13);
+-- 쿼리 10-2) isbn속성을 number형으로 변경
+ALTER TABLE NewBook MODIFY isbn NUMBER;
+-- 쿼리 10-3) isbn속성을 삭제
+ALTER TABLE NewBook DROP column isbn;
+-- 쿼리 10-4) bookname 속성에 not null 제약조건 추가
+ALTER TABLE NewBook MODIFY bookname CONSTRAINT notnull_bookname NOT NULL;
+
  
-## 데이터베이스 모델링
-- 데이터베이스를 모델링해줄 필요가 있다.
-
-## SQL Developer를 이용한 데이터모델링
-1. 도구-DataModeler-브라우저 를 선택해서 브라우저 창을 띄워준다.<br>
-2. 브라우저 - 관계형 모델 - 새 관계형 모델 을 선택해서 새로운 작업 창을 띄워준다.<br>
-3. 상태바의 표 아이콘을 클릭하여 새로운 표를 만든다.<br>
-4. 이름을 설정하고, 열과 데이터 타입을 설정해준다.<br>
-5. 다른 이것저것 설정을 원할때는 상태바에 있는 열쇠+화살표 아이콘을 클릭하여 관계를 설정해줄 수 있다.<br><br>
- 
-## SQL의 분류
-1. DML(Data Manipulation Language:데이터 조작 언어)<br>
-- 데이터를 조작(선택,삽입,수정,삭제)하는데 사용하는 언어<br>
-- 명령문 실행 후 COMMIT을 해야만 영구 반영<br>
-- 종류 : SELECT, INSERT, UPDATE, DELETE<br>
-
-2. DDL(Data Definiton Language:데이터 정의 언어)<br>
-- 데이터베이스 개체를 생성/삭제/변경하는 역할<br>
-- 종류 : CREATE, DROP, ALTER 등<br>
-
-3. DCL(Data Control Language:데이터 제어 언어)<br>
-- 사용자에게 권한을 부여하거나 빼앗을 때 사용하는 구문<br>
-- 종류 : GRANT, REVOKE, DENY 등<br><br>
-
-## INSERT문
-- 테이블에 데이터를 삽입하는 명령어
-- 기본 형식 : <b>INSERT INTO</b> 테이블(열1,열2,...) <b>VALUES</b>(값1,값2,...)
-- 다른 테이블에서 가져오려면 <b>INSERT INTO</b> 테이블(열1,열2,...) <b>SELECT</b> 열 FROM 다른 테이블
-
--- 데이터 삽입
-```sql
-INSERT into userTBL VALUES('이재현',2003,'서울','010-111-1111');
-```
--- 열 순서 변경 가능
-```sql
-INSERT into userTBL(username,addr,birthyear,mobile)
-VALUES('김현준','부산',2002,'010-333-3333');
-```
--- 모든 열의 데이터를 입력해야한다. 없다면 NULL을 줘야함
-```sql
-INSERT into userTBL VALUES('김지찬',2001,'강원',NULL);
-```
--- 쿼리 11-1) book테이블에 새로운 도서를 삽입
-```sql
-INSERT INTO book VALUES(11,'과학 야구: 제구론','삼성투코진',35000);
-```
---쿼리 11-2) Imported_book을 book 테이블에 모두 삽입
-```sql
-INSERT INTO book SELECT * FROM imported_book;
-```
-
-## SEQUENCE 시퀀스
-: 값을 자동으로 증가시켜주는 개체
-
-시퀀스 생성
-```sql
-CREATE SEQUENCE buytbl_seq;
-```
-시작 번호가 1이 아니라면,<br>
-시퀀스 생성 후, 시퀀스 우클릭하고 편집/ 시작 번호를 지정해줘야한다.<br><br>
-
-시퀀스 사용법 : buytbl_seq(시퀀스이름).nextval(다음값)
-```sql
-INSERT INTO buytbl VALUES('오승환','세이브',500,2023-06-06,buytbl_Seq.nextval);
-```
-## UPDATE 업데이트
-기본 형식: <b>UPDATE</b> 테이블이름 <b>SET</b> 속성이름=값 WHERE 조건<br>
-
-samsung 테이블의 speed 값을 speed-10 으로 변경
-```sql
-UPDATE samsung SET speed=speed-10;
-```
-samsung의 prodname 값 중 머리띠를 헤어밴드로 변경
-```sql
-UPDATE buytbl SET prodname='헤어밴드' WHERE prodname='머리띠';
-```
-lionsfans의 name 조영은의 buy를 3으로 변경
-```sql
-UPDATE lionsfans SET buy='3' WHERE name='조영은';
-```
 
 
 
