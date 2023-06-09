@@ -22,6 +22,7 @@ tags: [test]
 
 ```1=java
 <context:component-scan base-package="kr.bit.model" />
-DAO의 객체 생성을 위해 root-context.xml이 읽힐 때, 스캔되려면 
-문장을 추가해줘야돼
+//DAO의 객체 생성을 위해 root-context.xml이 읽힐 때, 
+스캔되려면 위 문장을 xml에 추가해주고
+또 class MemberDAO 위에 @Repository 어노테이션 걸어줘 
 ```
