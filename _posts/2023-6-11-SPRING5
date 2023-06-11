@@ -1,8 +1,55 @@
 ---
 layout: post
-title: SPRING -Delete
+title: SPRING -DAO없애기 
 categories: example
 tags: [plantuml]
 ---
 
-##Delete
+##DAO를 없애고, 인터페이스와 Mapper를 바로 이어 보자
+
+두가지 방법이 있어 
+
+방법 1) DAO를 없애고, 인터페이스에 추상메서드를 만든다.
+
+추상메서드들과 Mapper.xml의 id들과 매핑시켜서 해당 sql문을 실행시킨다.
+
+방법 2) Mapper.xml도 사용하지 않고, 추상메서드 위에 @Insert("SQL문") 이런 방법
+
+1.kr.bit.mapper 패키지 만들고 MemberMapper 인터페이스 생성
+
+```1=java
+  @Mapper
+  //@Mapper는 내부적으로 스프링 컨테이너에 담겨있는 SqlSessionFactory 와 SqlSession의 객체를 땡겨와 
+  //어노테이션 걸어줘야 알겠지? 그러면 얘도 스캔당해야 될 거아냐..->
+  /*	db관련이니까 root-context.xml에 context:scan 걸자 <mybatis-spring:scan base-package="kr.bit.mapper"/>
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+	추가 해주자.
+  */
+  public interface MemberMapper {
+	public List<MemberVO> memberList(); // SQL id="memberList"
+	public int memberInsert(MemberVO vo); // SQL id="memberInsert"
+	public int memberDelete(int num); // SQL id="memberDelete"
+	public MemberVO	memberContent(int num); // SQL id="memberContent"
+	public int membreUpdate(MemberVO vo); // SQL id="membreUpdate"
+	
+	//근데 이름이 같다고 그냥 매핑이 되면 좀 그렇잖아..
+	//그래서 우선, 인터페이스와 Mapper.xml을 같은 패키지에 넣어주고,
+	//또, 인터페이스의 이름과 MemberMapper.xml의 namespace의 이름이 같아야 찾아갈 수 있어.
+  //MemberMapper.xml의 <mapper namespace="kr.bit.mybatis.MemberMapper">로 수정
+}
+```
+
+2.이제 MemberController에서 DAO대신 MemberMapper인터페이스를 사용할거야
+```1=java
+  @Autowired //인터페이스 끌어오겠다.
+	//private MemberDAO dao;
+	private MemberMapper memberMapper;
+  //아래 메서드들은 memberMapper.memberInsert() 이런식으로 바꿔주자
+```
+
+
+
+
+
+
