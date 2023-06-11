@@ -35,3 +35,16 @@ tags: [plantuml]
 
 -SimpleDriverDataSource 클래스가 db.properties의 정보를 읽고, 연동해서 jdbc연결
 
+3.SqlSessionFactory로 커넥션 풀 생성
+
+-SqlSessionFactory클래스에 데이터베이스 연결 정보를 줄거야
+
+-dataSource를 참조 : 이 안에 property들을 참조해서 커넥션 풀을 생성
+
+이제 configuration 파일은 typealias 말고는 할 일이 없어
+
+스프링이 실행되면 root-context.xml -> servlet-context.xml 순으로 읽으며 아래 사진 순서로 스프링 컨테이너에 싣는다.
+
+
+
+
