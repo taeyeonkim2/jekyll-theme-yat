@@ -52,3 +52,42 @@ categories: ALGORITHM
    }//while
    m = num1 * num2 / a;
 ```
+
+3.선형 검색 알고리즘
+
+-임의의 배열에서 원하는 데이터를 찾는 알고리즘
+
+-pos=-1로 초기화
+
+내가 푼 것
+```1=java
+    int a[]= {72,68,92,88,41,53,97,84,39,55};
+		int pos=-1;
+		int key=23;
+		
+		for(int i=0;i<a.length;i++) {
+			if(a[i]==key) {pos=i; break;}
+		}
+		if(pos!=-1) {
+			System.out.println("a["+pos+"]");
+		}else {
+			System.out.println("찾는 수가 없습니다.");
+		}
+```
+
+책 답안
+```1=java
+    int a[]= {72,68,92,88,41,53,97,84,39,55};
+		int x,i,pos;
+    
+    Scanner sc=new Scanner(System.in);
+    x=sc.nextInt();
+    pos=-1;
+    sc.close();
+    
+    for(i=0;i<a.lenght && <strong>pos==-1</strong>;i++){
+       if(a[i] == x){
+        pos=i;
+       }
+     }
+```
