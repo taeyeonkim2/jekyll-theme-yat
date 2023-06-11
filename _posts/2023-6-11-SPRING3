@@ -19,20 +19,23 @@ tags: [plantuml]
 		//MemberDAO의 객체 만들어서 스프링 컨테이너에 올려야지 -> 어노테이션걸고 스캔 해야지
 		//근데 기존에는 kr.narp.myapp 스캔만 걸었으니까 kr.bit.model도 스캔할 수 있게 만들자
 		//DAO는 db와 관련이 있으니까 servlet-context.xml에서 스캔할 수 있게해주자
-		
+		    
     /*xmlns:context="http://www.springframework.org/schema/context"	
 	   xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 	   http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">*/
     //<context:component-scan base-package="kr.bit.model" />
-		
-	return "memberList";
+    
+    List<MemberVO> list=dao.memberList();
+		model.addAttribute("list",list); //스프링은 객체바인딩을 위해 Model클래스를 제공해준다.
+		//jsp에선 jquery로 ${list}로 받아주겠지
+	return "memberList"; //DispatcherServlet가 리턴값을 ViewResolver로 넘겨서 jsp 경로를 만들어준다.
 	}
 ```
 
 2.MemberDAO에서 SqlSessionFactory 끌어오는 과정도 달라진다.
 
 ```1=java
-  @Autowired
+  @Autowired //스프링 컨테이너의 SqlSessionFactory객체를 땡겨와라
 	private SqlSessionFactory sqlSessionFactory;
 	
 	public List<MemberVO> memberList() {
