@@ -1,0 +1,44 @@
+---
+layout: post
+title: SPRING DAO스캔
+categories: example
+tags: [plantuml]
+---
+
+
+1.이제 설정은 어느 정도 끝났으니까 매핑된 메서드를 구현하자.
+
+```1=java
+
+  @Autowired //스프링 컨테이너에 만들어져 있는 MemberDAO의 객체 끌어오겠다.
+	private MemberDAO dao;
+  
+  @RequestMapping("/memberList.do")
+	public String memberList(){
+		//MemberDAO dao=new MemberDAO(); 이거 안쓰기로 했잖아 그러려면 어딘가에 만들어져 있어야지?
+		//MemberDAO의 객체 만들어서 스프링 컨테이너에 올려야지 -> 어노테이션걸고 스캔 해야지
+		//근데 기존에는 kr.narp.myapp 스캔만 걸었으니까 kr.bit.model도 스캔할 수 있게 만들자
+		//DAO는 db와 관련이 있으니까 servlet-context.xml에서 스캔할 수 있게해주자
+		
+    /*xmlns:context="http://www.springframework.org/schema/context"	
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+	   http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">*/
+    //<context:component-scan base-package="kr.bit.model" />
+		
+	return "memberList";
+	}
+```
+
+2.MemberDAO에서 SqlSessionFactory 끌어오는 과정도 달라진다.
+
+```1=java
+  @Autowired
+	private SqlSessionFactory sqlSessionFactory;
+	
+	public List<MemberVO> memberList() {
+		SqlSession session=sqlSessionFactory.openSession();
+		List<MemberVO> list=session.selectList("memberList");
+		session.close();
+		return list;
+	}
+```
