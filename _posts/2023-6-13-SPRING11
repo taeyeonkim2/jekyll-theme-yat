@@ -1,0 +1,41 @@
+---
+layout: post
+title: SPRING -게시판 
+categories: SPRING
+tags: [taeyeon]
+---
+
+설정
+```
+-SpringMVC03 -> context : kr.inflearn.board 
+
+-pom.xml - spring version 4.2.4 로 바꾸기
+
+-141번 라인 쯤 source와 target을 1.8 버전으로 (자바 버전) -> maven update
+
+-main/java에 패키지 생성(kr.inflearn.mapper) (kr.inflearn.model) (kr.inflearn.service)
+
+-kr.inflearn.board 패키지를 web으로 변경 & views폴더를 board로 변경
+```
+
+1.Controller 먼저 만들자 (web안에 BoardController 생성)
+
+2.db테이블 만들자 (mapper에 board.sql 생성)
+
+```sql
+  create table tb_board( 
+  idx int not null auto_increment, --자동증가(아이디)
+  title varchar(100) not null, --제목
+  contents varchar(4000) not null, --내용
+  count int,-- 조회수
+  writer varchar(30) not null,--등록자
+  indate datetime default now() not null, --등록일
+  primary key(idx)
+);
+```
+
+* sql 에러 날 때 -> egov -> workspace -> metadat -> plugins ->sqltoolsresults-> 삭제
+
+
+
+
