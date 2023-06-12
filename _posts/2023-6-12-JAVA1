@@ -1,0 +1,29 @@
+---
+layout: post
+title: Equals / hashcode 오버라이딩
+categories: Java복습
+---
+
+##equals / hashcode 오버라이딩
+
+Object 클래스의 메서드들이야
+
+HashSet에 넣기 위해서는 중복인지 확인해야해.
+
+1차적으로 hashcode 메서드를 호출해서 걸러내고,
+
+그 다음에 equlas메서드를 호출해서 최종적으로 비교하는 거지
+
+어차피 동일 객체인지는 equals메서드만 호출하면 되잖아??
+
+비교할 대상을 줄여주기 위해서 hashcode로 한번 걸러주는거야
+
+예를 들어, hashcode메서드를 return num%3 으로 재정의한다면,
+
+0,1,2 라는 3개의 그룹이 있겠지??
+
+이미 100개의 데이터가 hashset에 들어있다고 하면,
+
+우린 최대 100번을 비교해야하지만,
+
+hashcode메서드를 호출함으로써 그 범위를 줄일 수 있는거지
