@@ -2,7 +2,7 @@
 layout: post
 title: Test markdown
 subtitle: Each post also has a subtitle
-categories: trash
+categories: junk
 tags: [test]
 ---
 
