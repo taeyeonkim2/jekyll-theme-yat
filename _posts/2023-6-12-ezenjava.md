@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 2023-6-12-ezen
-categories: 수업
+categories: 수업-자바
 ---
 
 
