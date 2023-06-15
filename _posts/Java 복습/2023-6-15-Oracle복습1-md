@@ -38,3 +38,9 @@ where height not in (select height from usertbl where addr='경남');
 
 >ANY 의 반대 <=ALL
 ```
+
+## 쿼리 18)
+```sql
+  --가장 비싼 도서의 이름을 찾아서 출력
+  select bookname from book where price=(select max(price) from book);
+```
