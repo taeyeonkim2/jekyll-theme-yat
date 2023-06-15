@@ -11,11 +11,15 @@ ERROR
 select username, height from usertbl where height>(select height from usertbl where username='김경호');
 //서브쿼리의 결과값이 2개라 에러
 
-ANY 
+>=ANY 
 select username, height from usertbl where height>=any (select height from usertbl where addr='경남');
 //170이상 '또는' 173이상
 
-ALL
+>=ALL
 select username, height from usertbl where height>=all (select height from usertbl where addr='경남'); 
 //170이상 '그리고' 173이상
+
+=ANY 
+select username, height from usertbl where height>=any (select height from usertbl where addr='경남');
+//170과 173
 ```
