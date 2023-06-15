@@ -1,0 +1,13 @@
+---
+layout: post
+title: 서브쿼리
+categories: Oracle복습
+---
+
+## any, all
+
+```sql
+select username, height from usertbl where height>=any (select height from usertbl where addr='경남');
+
+select username, height from usertbl where height>=all (select height from usertbl where addr='경남');
+```
