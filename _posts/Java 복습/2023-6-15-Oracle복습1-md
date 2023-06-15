@@ -31,4 +31,10 @@ NOT IN or <>ALL
 select username, height 
 from usertbl 
 where height not in (select height from usertbl where addr='경남');
+
+=ANY 의 반대 <>ALL
+
+=ALL 의 반대 <>ANY 
+
+>ANY 의 반대 <=ALL
 ```
