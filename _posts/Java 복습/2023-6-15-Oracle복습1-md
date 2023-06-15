@@ -7,6 +7,10 @@ categories: Oracle복습
 ## any, all
 
 ```sql
+<>
+select username, height from usertbl where height<>(select height from usertbl where username='이승기');
+//이승기와 키가 같지 않은
+
 ERROR
 select username, height from usertbl where height>(select height from usertbl where username='김경호');
 //서브쿼리의 결과값이 2개라 에러
