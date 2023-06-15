@@ -41,6 +41,9 @@ where height not in (select height from usertbl where addr='경남');
 
 ## 쿼리 18)
 ```sql
-  --가장 비싼 도서의 이름을 찾아서 출력
+  --1. 가장 비싼 도서의 이름을 찾아서 출력
   select bookname from book where price=(select max(price) from book);
+  --2. 도서를 구매한 적이 있는 고객의 이름을 검색.
+  select name from customer where custid=any(select distinct custid from orders);
+  select name from customer where custid in(select distinct custid from orders);
 ```
