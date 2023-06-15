@@ -26,4 +26,9 @@ select username, height from usertbl where height>=all (select height from usert
 =ANY or =SOME or IN
 select username, height from usertbl where height=any (select height from usertbl where addr='경남');
 //170과 173
+
+NOT IN or <>ALL
+select username, height 
+from usertbl 
+where height not in (select height from usertbl where addr='경남');
 ```
