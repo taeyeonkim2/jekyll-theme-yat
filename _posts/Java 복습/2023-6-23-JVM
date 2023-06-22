@@ -24,6 +24,33 @@ categories: Java복습
 
 메서드영역에 로딩된 것들은 프로그램이 종료될 때까지 사라지지 않고 유지 된다.
 
+```1=java
+class JMain{ //JMain클래스를 읽기 위해 메서드 영역에 로딩
+  public static void main(String[] args){ //얘도 메서드니까 로딩 
+      Hey hey=new Hey(); 
+      //인스턴스생성하기 전에 Hey클래스의 정보를 알아야 겠지?
+      //읽어오자
+  }
+}
+class Hey{
+  static int sum=0; //읽다보니 static변수네? 메서드 영역에 올리고, 초기화까지 해줘야지
+  public void sayhi(){...}
+}
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
