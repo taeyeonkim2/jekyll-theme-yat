@@ -1,0 +1,15 @@
+---
+layout: post
+title: MVC02
+categories: MVC02복습
+---
+
+설정 부터 하자<br>
+1. root-context.xml<br>
+jdbc연결을 위해 HikariCP API를 사용<br>
+HikariConfig 클래스 (jdbc 연결)<br>
+-> HikariDataSource (커넥션 풀 생성)<br>
+-> mapper (추상메서드 구현할 인터페이스를 컨테이너에 올리기)<br>
+-> SqlSessionFactoryBean (올라온 인터페이스의 추상메서드 구현 및 커넥션 풀 사용을 위해)<br>
+
+
